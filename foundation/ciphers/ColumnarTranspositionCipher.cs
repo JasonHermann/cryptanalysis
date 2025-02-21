@@ -16,17 +16,17 @@ namespace foundation.ciphers
 
         public string Decrypt(string cipherText)
         {
-            return Crypt(cipherText, _key);
+            return Crypt(cipherText, _key, true);
         }
 
         public string Encrypt(string plainText)
         {
-            return Crypt(plainText, _key);
+            return Crypt(plainText, _key, false);
         }
 
-        static string Crypt(string text, int key)
+        public static string Crypt(string text, int key, bool decrypt)
         {
-            var output = new StringBuilder(text.Length);
+            var output = decrypt ? new StringBuilder(text) : new StringBuilder(text.Length);
             int workingKey = key > text.Length ? text.Length : key;
 
             var column = 0;
@@ -39,7 +39,15 @@ namespace foundation.ciphers
                     row = 0;
                 }
                 var workingIndex = row * workingKey + column;
-                output.Append(text[workingIndex]);
+
+                if(decrypt)
+                {
+                    output[workingIndex] = c;
+                }
+                else
+                {
+                    output.Append(text[workingIndex]);
+                }
                 row += 1;
             }
 
