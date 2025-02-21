@@ -8,10 +8,10 @@ namespace foundation.Permutations
 {
     public static class RotationPermutation
     {
-        public static IList<T>? Rotate<T>(IList<T> source, int index)
+        public static IList<T> Rotate<T>(IList<T> source, int index)
         {
-            if (source == null) return null;
-            if (source.Count == 0) return new List<T>();
+            if (source == null) throw new ArgumentNullException();
+            if (source.Count == 0) return [];
 
             var count = source.Count;
             index = (index % count + count) % count;
@@ -25,9 +25,9 @@ namespace foundation.Permutations
             return output;
         }
 
-        public static IEnumerable<T>? Rotate<T>(IEnumerable<T> source, int index)
+        public static IEnumerable<T> Rotate<T>(IEnumerable<T> source, int index)
         {
-            if (source == null) yield break;
+            if (source == null) throw new ArgumentNullException();
             var count = source.Count();
             index = (index % count + count) % count;
 
