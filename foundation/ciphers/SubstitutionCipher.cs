@@ -12,6 +12,11 @@ namespace foundation.ciphers
         UnmappedCharacters_LeaveAsIs  = 1 << 1,
         UnmappedCharacters_Remove     = 1 << 2,
         UnmappedCharacters_ThrowError = 1 << 3,
+        /// <summary>
+        /// In a polyalphabetic cipher, does encountering an unmapped character advance the alphabet index?
+        /// </summary>
+        UnmappedCharacters_AdvancesAlphabet       = 1 << 4,
+        UnmappedCharacters_DoesNotAdvanceAlphabet = 1 << 5,
     }
 
     public class SubstitutionCipher : ICipher
@@ -48,51 +53,30 @@ namespace foundation.ciphers
 
         public string Encrypt(string plainText)
         {
-            if (string.IsNullOrEmpty(plainText))
-                return string.Empty;
+            return Crypt(plainText, _encryptMapping, _encryptionOptions);
 
-            var sb = new StringBuilder(plainText.Length);
-
-            foreach (var ch in plainText)
-            {
-                if (_encryptMapping.TryGetValue(ch, out char mappedChar))
-                {
-                    sb.Append(mappedChar);
-                }
-                else
-                {
-                    switch (_encryptionOptions)
-                    {
-                        case SubstitutionOptions.UnmappedCharacters_LeaveAsIs:
-                            sb.Append(ch);
-                            break;
-                        case SubstitutionOptions.UnmappedCharacters_Remove:
-                            break;
-                        case SubstitutionOptions.UnmappedCharacters_ThrowError:
-                            var message = string.Format("Character {0} is not mapped in dictionary.", ch);
-                            throw new NotSupportedException(message);
-                    };
-                }
-            }
-            return sb.ToString();
         }
-
         public string Decrypt(string cipherText)
         {
-            if (string.IsNullOrEmpty(cipherText))
+            return Crypt(cipherText, _decryptMapping, _decryptionOptions);
+        }
+
+        static string Crypt(string text, Dictionary<char, char> lookup, SubstitutionOptions options)
+        {
+            if (string.IsNullOrEmpty(text))
                 return string.Empty;
 
-            var sb = new StringBuilder(cipherText.Length);
+            var sb = new StringBuilder(text.Length);
 
-            foreach (var ch in cipherText)
+            foreach (var ch in text)
             {
-                if (_decryptMapping.TryGetValue(ch, out char mappedChar))
+                if (lookup.TryGetValue(ch, out char mappedChar))
                 {
                     sb.Append(mappedChar);
                 }
                 else
                 {
-                    switch (_decryptionOptions)
+                    switch (options)
                     {
                         case SubstitutionOptions.UnmappedCharacters_LeaveAsIs:
                             sb.Append(ch);
