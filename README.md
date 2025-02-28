@@ -9,3 +9,5 @@ I'll try my best to maintain a list of text material that is assisting me below.
 ## Reference Material 
 
 Swenson, Christopher. 'Modern Cryptanalysis' (2022-01-23). [[link](https://swenson.io/Modern%20Cryptanalysis%20v1.1%202022-01-23.pdf)]
+
+Paar, Christof and Pelzl, Jan. 'Understand Cryptography 2nd Edition' (2024) ([[link]https://doi.org/10.1007/978-3-662-69007-9]
