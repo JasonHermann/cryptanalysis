@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="data\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Update="data\frequency.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
