@@ -11,7 +11,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="data\frequency.csv">
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.74" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="data\frequency.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="data\tom_sawyer.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
