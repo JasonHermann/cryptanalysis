@@ -20,7 +20,7 @@ namespace foundation.data
 
         public static readonly List<string> CommonTrigrams = new()
         {
-            "the","and","ing","hat","her","was","ere","his","tha","you","for","ver","ith","with","tom", "ent","this","ter","ght","all","hey","out"
+            "the","and","ing","hat","her","was","ere","his","tha","you","for","ver","ith","with","tom", "ent","thi","ter","ght","all","hey","out"
         };
 
         public static readonly Dictionary<int, List<string>> CommonWords_ByLength = new()
