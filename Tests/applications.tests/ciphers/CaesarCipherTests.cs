@@ -1,6 +1,8 @@
 using applications.ciphers;
 using foundation.ciphers;
+using foundation.Permutations;
 using NuGet.Frameworks;
+using System.Collections;
 
 namespace applications.tests.ciphers
 {
