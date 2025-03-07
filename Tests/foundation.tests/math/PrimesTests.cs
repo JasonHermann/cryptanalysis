@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -160,6 +161,40 @@ namespace foundation.tests.math
             Assert.Equal(expected, isPrime);
             Assert.Equal(expected_count, primes.Count);
         }
+
+        [Fact]
+        public void IsPrime_LargeValues()
+        {
+            // Arrange
+            var p = 100000001923; // This is a known prime
+            var bigP = new BigInteger(p);
+
+            // Act
+            var b = Primes.IsPrime(bigP);
+
+            // Assert
+            Assert.True(b);
+        }
+
+        [Fact]
+        public void IsPrime_RidiculouslyLargeValues()
+        {
+            // Arrange
+            var p_prime     = "101524035174539890485408575671085261788758965189060164484385690801466167356667036677932998889725476582421738788500738738503134356158197247473850273565349249573867251280253564698939768700489401960767007716413932851838937641880157263936985954881657889497583485535527613578457628399173971810541670838543309159139";
+            var p_composite = "101524035174539890485408575671085261788758965189060164484385690801466167356667036677932998889725476582421738788500738738503134356158197247473850273565349249573867251280253564698939768700489401960767007716413932851838937641880157263936985954881657889497583485535527613578457628399173971810541670838543309159141";
+
+            var bigP = BigInteger.Parse(p_prime);
+            var bigComposite = BigInteger.Parse(p_composite);
+
+            // Act
+            var prime_test = Primes.IsPrime(bigP);
+            var composite_test = Primes.IsPrime(bigComposite);
+
+            // Assert
+            Assert.True(prime_test);
+            Assert.False(composite_test);
+        }
+
 
     }
 }

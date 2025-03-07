@@ -1,6 +1,8 @@
-﻿using System;
+﻿using foundation.math;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -94,12 +96,73 @@ namespace foundation.tests.math
             {
                 a *= -1;
             }
+            if (a > 10000)
+                throw new NotSupportedException("Try using the other implementation of this function with BigIntegers");
+
             if (a > MaxSearch)
             {
                 FindAllPrimesUpToN(a);
             }
 
             return PrimeNumbers.Contains(a);
+        }
+
+        public static bool IsPrime(BigInteger possiblePrime)
+        {
+            if (possiblePrime < 1000)
+            {
+                return IsPrime((long)possiblePrime);
+            }
+            if (possiblePrime % 2 == 0)
+            {
+                return false;
+            }
+
+            (BigInteger s, BigInteger d) = FactorizePminus1(possiblePrime);
+            var pminus1 = new BigModuloInteger(possiblePrime - 1, possiblePrime);
+            var one = new BigModuloInteger(1, possiblePrime);
+
+            // Pick several "random" bases
+            // If none have proof p is composite, we assume p is prime.
+            // Test with every prime up to 100
+            Primes.IsPrime(100);
+            var primesTo100 = PrimeNumbers.Take(25).ToList();
+            foreach(var p in primesTo100)
+            {
+                var a = new BigModuloInteger(new BigInteger(p), possiblePrime);
+
+                bool isDefinitelyComposite = true;
+                var powerOfTwo = new BigInteger(1);
+                for(BigInteger s0 = 0; s0 <= s; s0++)
+                {
+                    if (s0 != 0)
+                        powerOfTwo *= 2;
+                    var a0 = a.Pow(powerOfTwo * d);
+                    if (a0 == pminus1 || a0 == one)
+                    {
+                        isDefinitelyComposite = false;
+                        break;
+                    }
+                }
+                if (isDefinitelyComposite == true)
+                    return false;
+            }
+            return true;
+        }
+
+        public static (BigInteger, BigInteger) FactorizePminus1(BigInteger p)
+        {
+            // Find s and q such that
+            // p - 1 = 2^s * q (q is odd)
+            BigInteger s = 0;
+            BigInteger q = p - 1;
+
+            while (q % 2 == 0)
+            {
+                q >>= 1;
+                s += 1;
+            }
+            return (s, q);
         }
     }
 }
