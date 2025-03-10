@@ -13,3 +13,6 @@ Swenson, Christopher. 'Modern Cryptanalysis' (2022-01-23). [[link](https://swens
 Paar, Christof and Pelzl, Jan. 'Understand Cryptography 2nd Edition' (2024) [[link](https://doi.org/10.1007/978-3-662-69007-9)]
 
 CryptoHack - Courses on Cryptography [[link](https://cryptohack.org/)]
+
+Wong, David.  'Real-World Cryptography' (2021) [[link](https://www.manning.com/books/real-world-cryptography)]
+
